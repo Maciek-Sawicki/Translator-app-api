@@ -85,8 +85,13 @@ Payload:
 Odpowiedź: 
 ```json
 {
-  "message": "Translation added successfully",
-  "translationId": "uuid"
+  "sourceText": "Hello",
+  "translatedText": "Cześć",
+  "sourceLanguage": "en",
+  "targetLanguage": "pl",
+  "_id": "67410f789ee506fe7c2c899c",
+  "createdAt": "2024-11-22T23:10:48.556Z",
+  "__v": 0
 }
 ```
 
@@ -108,13 +113,13 @@ Odpowiedź:
 ```json
 [
   {
-    "id": "uuid",
-    "sourceText": "Hello",
-    "translatedText": "Cześć",
-    "sourceLanguage": "en",
-    "targetLanguage": "pl",
-    "createdDate": "2024-11-13T10:00:00Z",
-    "modifiedDate": null
+      "_id": "67410bcb1999ce1548c9157b",
+      "sourceText": "mouse",
+      "translatedText": "mysz",
+      "sourceLanguage": "en",
+      "targetLanguage": "pl",
+      "createdAt": "2024-11-22T22:55:07.270Z",
+      "__v": 0
   }
 ]
 
@@ -134,13 +139,13 @@ Parametry:
 Odpowiedź: 
 ```json
 {
-  "id": "uuid",
-  "sourceText": "Hello",
-  "translatedText": "Cześć",
+  "_id": "67410f37a93b73a8185f5677",
+  "sourceText": "mouse2",
+  "translatedText": "mysz2",
   "sourceLanguage": "en",
   "targetLanguage": "pl",
-  "createdDate": "2024-11-13T10:00:00Z",
-  "modifiedDate": null
+  "createdAt": "2024-11-22T23:09:43.180Z",
+  "__v": 0
 }
 ```
 
@@ -169,7 +174,11 @@ Payload:
 Odpowiedź: 
 ```json
 {
-  "message": "Translation updated successfully"
+    "sourceText": "Hi",
+    "translatedText": "Cześć",
+    "sourceLanguage": "en",
+    "targetLanguage": "pl",
+    "_id": "67410bcb1999ce1548c9157b"
 }
 ```
 
@@ -188,7 +197,7 @@ Parametry:
 Odpowiedź: 
 ```json
 {
-  "message": "Translation deleted successfully"
+    "message": "Translation deleted"
 }
 ```
 
