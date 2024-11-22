@@ -228,9 +228,9 @@ Opis: Pobieranie dostępnych języków.
 Odpowiedź: 
 ```json
 [
-  { "code": "en", "name": "English" },
-  { "code": "pl", "name": "Polish" },
-  { "code": "de", "name": "German" }
+  { "code": "en", "name": "English", "nativeName": "Engilsh" },
+  { "code": "pl", "name": "Polish", "nativeName": "Polski" },
+  { "code": "de", "name": "German", "nativeName": "Deutsch" }
 ]
 
 ```
@@ -247,7 +247,8 @@ Payload:
 ```json
 {
   "code": "fr",
-  "name": "French"
+  "name": "French",
+  "nativeName": "Français"
 }
 ```
 Odpowiedź:
