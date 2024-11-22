@@ -3,12 +3,41 @@ import mongoose from "mongoose";
 
 export const getAllTranslations = async (req, res) => {
   try {
-    const translations = await Translation.find();
+    const { sourceLanguage, targetLanguage } = req.query;
+    let filter = {};
+
+    if (sourceLanguage) {
+      filter.sourceLanguage = sourceLanguage; 
+    }
+    if (targetLanguage) {
+      filter.targetLanguage = targetLanguage; 
+    }
+    const translations = await Translation.find(filter);
     res.status(200).json(translations);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const getTranslationById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid ID format" });
+    }
+
+    const translation = await Translation.findById(id);
+
+    if (!translation) {
+      return res.status(404).json({ error: "Translation not found" });
+    }
+
+    res.status(200).json(translation);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 
 export const addTranslation = async (req, res) => {
   try {
