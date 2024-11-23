@@ -93,3 +93,37 @@ export const updateTranslation = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 }
+
+export const translateText = async (req, res) => {
+  try {
+    const { sourceText, sourceLanguage, targetLanguage } = req.body;
+
+    if (!sourceText || !sourceLanguage || !targetLanguage) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+    const translation = await Translation.findOne({ sourceText, sourceLanguage, targetLanguage });
+
+
+    //TODO: User translation history
+    // if (req.user) {
+    //   const user = await User.findById(req.user.id);
+
+    //   if (!user) {
+    //     return res.status(404).json({ error: "User not found" });
+    //   }
+    //   if (!user.translations.includes(translation._id)) {
+    //     user.translations.push(translation._id);
+    //     await user.save();
+    //   }
+    // }
+
+    if (translation) {
+      const { createdAt, __v, ...filteredTranslation } = translation._doc;
+      return res.status(200).json(filteredTranslation);
+    }
+
+    res.status(404).json({ error: "Translation not found" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+} 
