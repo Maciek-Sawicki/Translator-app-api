@@ -68,8 +68,12 @@ export const loginUser = async (req, res) => {
 
 export const authUser = async (req, res, next) => {
     try {
+        const authHeader = req.headers.authorization;
+        if (!authHeader) {
+            return res.status(401).json({ error: "Access denied. No token provided" });
+          }
+        
         const token = req.headers.authorization.split(" ")[1];
-
         if (!token) { 
             return res.status(401).json({ error: "Access denied." });
         }
