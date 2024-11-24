@@ -1,4 +1,5 @@
 import Translation from "../models/translation.js";
+import User from "../models/user.js";
 import mongoose from "mongoose";
 
 export const getAllTranslations = async (req, res) => {
@@ -103,22 +104,20 @@ export const translateText = async (req, res) => {
     }
     const translation = await Translation.findOne({ sourceText, sourceLanguage, targetLanguage });
 
-
-    //TODO: User translation history
-    // if (req.user) {
-    //   const user = await User.findById(req.user.id);
-
-    //   if (!user) {
-    //     return res.status(404).json({ error: "User not found" });
-    //   }
-    //   if (!user.translations.includes(translation._id)) {
-    //     user.translations.push(translation._id);
-    //     await user.save();
-    //   }
-    // }
-
     if (translation) {
       const { createdAt, __v, ...filteredTranslation } = translation._doc;
+      
+      if (req.user) {
+        const user = await User.findById(req.user._id);
+  
+        if (!user) {
+          return res.status(404).json({ error: "User not found" });
+        }
+        if (!user.translations.includes(translation._id)) {
+          user.translations.push(translation._id);
+          await user.save();
+        }
+      }
       return res.status(200).json(filteredTranslation);
     }
 

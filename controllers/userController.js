@@ -94,3 +94,22 @@ export const authAdmin = (req, res, next) => {
     }
     next();
 };
+
+export const getUserProfile = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const user = await User.findById(userId)
+        .select("-passwordHash")
+        .populate("translations", "sourceText translatedText sourceLanguage targetLanguage");
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        res.status(200).json(user);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+};
