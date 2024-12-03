@@ -3,9 +3,13 @@ import { registerUser, loginUser, getUserProfile, authUser } from "../controller
 
 const router = express.Router();
 
+// router.post("/register", registerUser);
+// router.post("/login", loginUser);
+// router.get("/profile", authUser, getUserProfile);
+
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.get("/profile", authUser, getUserProfile);
+router.get("/profile", getUserProfile);
 
 export default router;
 
