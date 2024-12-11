@@ -1,6 +1,7 @@
 import Translation from "../models/translation.js";
 import User from "../models/user.js";
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 
 export const getAllTranslations = async (req, res) => {
   try {
@@ -107,17 +108,28 @@ export const translateText = async (req, res) => {
     if (translation) {
       const { createdAt, __v, ...filteredTranslation } = translation._doc;
       
-      if (req.user) {
-        const user = await User.findById(req.user._id);
-  
-        if (!user) {
-          return res.status(404).json({ error: "User not found" });
-        }
-        if (!user.translations.includes(translation._id)) {
-          user.translations.push(translation._id);
-          await user.save();
+      if (req.headers.authorization) {
+        const token = req.headers.authorization.split(" ")[1];
+        if (token) {
+          try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const user = await User.findById(decoded.id);
+
+            if (!user) {
+              return res.status(404).json({ error: "User not found" });
+            }
+
+            if (!user.translations.includes(translation._id)) {
+              user.translations.push(translation._id);
+              await user.save();
+            }
+          } catch (err) {
+            console.error("Token verification failed:", err);
+            return res.status(401).json({ error: "Invalid token" });
+          }
         }
       }
+
       return res.status(200).json(filteredTranslation);
     }
 
