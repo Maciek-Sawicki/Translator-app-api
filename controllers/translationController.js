@@ -103,7 +103,11 @@ export const translateText = async (req, res) => {
     if (!sourceText || !sourceLanguage || !targetLanguage) {
       return res.status(400).json({ error: "Missing required fields" });
     }
-    const translation = await Translation.findOne({ sourceText, sourceLanguage, targetLanguage });
+    const translation = await Translation.findOne({
+      sourceText: { $regex: new RegExp(`^${sourceText}$`, "i") }, 
+      sourceLanguage: { $regex: new RegExp(`^${sourceLanguage}$`, "i") }, 
+      targetLanguage: { $regex: new RegExp(`^${targetLanguage}$`, "i") } 
+    });
 
     if (translation) {
       const { createdAt, __v, ...filteredTranslation } = translation._doc;
