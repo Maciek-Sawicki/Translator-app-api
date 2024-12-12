@@ -62,7 +62,7 @@ export const loginUser = async (req, res) => {
             user: {
                 id: user._id,
                 username: user.username,
-                role: user.role
+                // role: user.role
             }
         });
     } catch (error) {

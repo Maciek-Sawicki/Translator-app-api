@@ -4,14 +4,9 @@ import { authUser, authAdmin } from "../controllers/userController.js";
 
 const router = express.Router();
 
-// router.get("/", getAllLanguages);
-// router.post("/", authUser, authAdmin, addLanguage);
-// router.delete("/:id", authUser, authAdmin, deleteLanguage);
-// router.put("/:id", authUser, authAdmin, updateLanguage);
-
 router.get("/", getAllLanguages);
-router.post("/", addLanguage);
-router.delete("/:id", deleteLanguage);
-router.put("/:id", updateLanguage);
+router.post("/", authUser, authAdmin, addLanguage);
+router.delete("/:id", authUser, authAdmin, deleteLanguage);
+router.put("/:id", authUser, authAdmin, updateLanguage);
 
 export default router;
