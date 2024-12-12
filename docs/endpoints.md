@@ -15,9 +15,7 @@ Payload:
 Odpowiedź:
 ```json
 {
-  "username": "example_user",
-  "email": "example@example.com",
-  "password": "example_password"
+  "message": "User register successfully"
 }
 ```
 POST ```/api/users/login```
@@ -34,6 +32,7 @@ Payload:
 Odpowiedź:
 ```json
 {
+  "message": "User logged in successfully",
   "token": "jwt-token",
   "user": {
     "id": "uuid",
@@ -55,10 +54,24 @@ Authorization: Bearer <jwt-token>
 Odpowiedź:
 ```json
 {
-  "id": "uuid",
-  "username": "example_user",
-  "email": "example@example.com",
-  "role": "user"
+  "_id": "1",
+  "username": "admin",
+  "email": "admin@example.com",
+  "role": "user",
+  "translations": [
+      {
+          "_id": "1",
+          "sourceText": "mysz",
+          "translatedText": "mouse",
+          "sourceLanguage": "pl",
+          "targetLanguage": "en"
+      },
+      {
+        ...
+      }
+  ],
+  "createdDate": "2024-11-24T15:25:08.190Z",
+  "__v": 1
 }
 ```
 
@@ -104,10 +117,6 @@ Nagłówek:
 ```
 Authorization: Bearer <jwt-token>
 ```
-
-Parametry opcjonalne:
-```?sourceLanguage=pl```
-```?targetLanguage=en```
 
 Odpowiedź: 
 ```json
